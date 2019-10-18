@@ -23,8 +23,8 @@ def extract_patches(image, patchshape, overlap_allowed=0.5, cropvalue=None,
     Likewise, patches will be rejected for having more overlap_allowed
     fraction of their pixels contained in a patch already selected.
     """
-    jump_cols = int(patchshape[1] * overlap_allowed)
-    jump_rows = int(patchshape[0] * overlap_allowed)
+    jump_cols = int(patchshape[1] * (1 - overlap_allowed))
+    jump_rows = int(patchshape[0] * (1 - overlap_allowed))
 
     # Restrict ourselves to the rectangle containing non-cropped pixels
     if cropvalue is not None:
