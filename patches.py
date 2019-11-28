@@ -134,12 +134,11 @@ def filter_patches(patches, min_mean=0.0, min_std=0.0):
     return patches[indices]
 
 
-def save_images(patches):
+def save_images(patches, dir_f=os.getcwd()):
     count = 0
-    dir = os.getcwd()
     for i, patch in enumerate(patches):
         im = Image.fromarray(np.uint8(patch * 255))
-        im.save(dir, "_" + str(count) + "_" + i + '.png')
+        im.save(dir_f, "_" + str(count) + "_" + i + '.png')
     count += 1
 
 
