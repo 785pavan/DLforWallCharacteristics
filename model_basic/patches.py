@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.ndimage as ndimage
 from PIL import Image
+from PIL import ImageOps
 from tqdm import tqdm_notebook
 
 def frac_eq_to(image, value=0):
@@ -85,7 +86,7 @@ def extract_patches(image, patchshape, overlap_allowed=0.5, cropvalue=None,
     # Return a 3D array of the patches with the patch index as the first
     # dimension (so that patch pixels stay contiguous in memory, in a 
     # C-ordered array).
-    return np.concatenate([pat[np.newaxis, ...] for pat in patches], axis=0)
+    return adjust_mask(np.concatenate([pat[np.newaxis, ...] for pat in patches], axis=0))
 
 
 def plot_patches(patches, fignum=None, low=0, high=0):
@@ -152,7 +153,7 @@ def extract_patches_from_dir(directory, patchsize,
     """
     output = {}
     for fname in os.listdir(directory):
-        if fname[-4:] == '.tiff':
+        if fname[-4:] == '.tif':
             outname = fname.replace('.', '_').replace('-', '_')
             assert outname not in output
             image = plt.imread(os.path.join(directory, fname))
@@ -168,10 +169,20 @@ def extract_patches_from_dir(directory, patchsize,
                                              min_mean=min_mean)
     return output
 
+def adjust_mask(patches):
+    for patch in patches:
+        if patch.mean()<10:
+            patch = 255
+    return patches
 
 def save_images(patches, n=0, dir_f= os.getcwd(), ext='.png'):
     if not os.path.isdir(dir_f):
             os.system('mkdir ' + dir_f)
     for i, patch in tqdm_notebook(enumerate(patches), total=len(patches)):
-        im = Image.fromarray(np.uint8(patch), mode='RGB')
-        im.save(dir_f + 'patch' + "_" + str(n) + "_" + str(i) + ext)
+        if len(patch.shape) == 4:
+            im = Image.fromarray(patch[:,:,:,:3])
+            im.save(dir_f + '/patch' + "_" + str(n) + "_" + str(i) + ext)
+        else:
+            im = Image.fromarray(np.uint8(patch*255), mode='RGB')
+            im = ImageOps.invert(im)
+            im.save(dir_f + '/patch' + "_" + str(n) + "_" + str(i) + ext)
