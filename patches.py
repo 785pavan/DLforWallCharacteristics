@@ -4,6 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.ndimage as ndimage
+from PIL import Image
 
 
 def frac_eq_to(image, value=0):
@@ -131,6 +132,15 @@ def filter_patches(patches, min_mean=0.0, min_std=0.0):
     stdevs = patchvectors.std(axis=1)
     indices = (means > min_mean) & (stdevs > min_std)
     return patches[indices]
+
+
+def save_images(patches):
+    count = 0
+    dir = os.getcwd()
+    for i, patch in enumerate(patches):
+        im = Image.fromarray(np.uint8(patch * 255))
+        im.save(dir, "_" + str(count) + "_" + i + '.png')
+    count += 1
 
 
 def extract_patches_from_dir(directory, patchsize,
