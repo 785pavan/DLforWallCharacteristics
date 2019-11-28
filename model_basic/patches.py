@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.ndimage as ndimage
 from PIL import Image
-
+from tqdm import tqdm_notebook
 
 def frac_eq_to(image, value=0):
     return (image == value).sum() / float(np.prod(image.shape))
@@ -134,11 +134,6 @@ def filter_patches(patches, min_mean=0.0, min_std=0.0):
     return patches[indices]
 
 
-def save_images(patches, n=0):
-    dir = os.getcwd()
-    for i, patch in enumerate(patches):
-        im = Image.fromarray(np.uint8(patch * 255))
-        im.save(dir, "_" + n + "_" + i + '.png')
 
 
 def extract_patches_from_dir(directory, patchsize,
@@ -172,3 +167,11 @@ def extract_patches_from_dir(directory, patchsize,
             output[outname] = filter_patches(output[outname], min_std=min_std,
                                              min_mean=min_mean)
     return output
+
+
+def save_images(patches, n=0, dir_f= os.getcwd(), ext='.png'):
+    if not os.path.isdir(dir_f):
+            os.system('mkdir ' + dir_f)
+    for i, patch in tqdm_notebook(enumerate(patches), total=len(patches)):
+        im = Image.fromarray(np.uint8(patch), mode='RGB')
+        im.save(dir_f + 'patch' + "_" + str(n) + "_" + str(i) + ext)
