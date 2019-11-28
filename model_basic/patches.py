@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.ndimage as ndimage
 from PIL import Image
-
+from tqdm import tqdm_notebook
 
 def frac_eq_to(image, value=0):
     return (image == value).sum() / float(np.prod(image.shape))
@@ -44,7 +44,7 @@ def extract_patches(image, patchshape, overlap_allowed=0.5, cropvalue=None,
     patches = []
 
     while rowstart < active.shape[0] - patchshape[0]:
-        # Record whether or not e've found a patch in this row,
+        # Record whether or not e've found a patch in this row, 
         # so we know whether to skip ahead.
         got_a_patch_this_row = False
         colstart = 0
@@ -83,7 +83,7 @@ def extract_patches(image, patchshape, overlap_allowed=0.5, cropvalue=None,
             rowstart += 1
 
     # Return a 3D array of the patches with the patch index as the first
-    # dimension (so that patch pixels stay contiguous in memory, in a
+    # dimension (so that patch pixels stay contiguous in memory, in a 
     # C-ordered array).
     return np.concatenate([pat[np.newaxis, ...] for pat in patches], axis=0)
 
@@ -91,7 +91,7 @@ def extract_patches(image, patchshape, overlap_allowed=0.5, cropvalue=None,
 def plot_patches(patches, fignum=None, low=0, high=0):
     """
     Given a stack of 2D patches indexed by the first dimension, plot the
-    patches in subplots.
+    patches in subplots. 
 
     'low' and 'high' are optional arguments to control which patches
     actually get plotted. 'fignum' chooses the figure to plot in.
@@ -120,10 +120,10 @@ def plot_patches(patches, fignum=None, low=0, high=0):
 def filter_patches(patches, min_mean=0.0, min_std=0.0):
     """
     Filter patches by some criterion on their mean and variance.
-
+    
     Takes patches, a 3-dimensional stack of image patches (where
     the first dimension indexes the patch), and a minimum
-    mean and standard deviation. Returns a stack of all the
+    mean and standard deviation. Returns a stack of all the 
     patches that satisfy both of these criteria.
     """
     patchdim = np.prod(patches.shape[1:])
@@ -134,11 +134,6 @@ def filter_patches(patches, min_mean=0.0, min_std=0.0):
     return patches[indices]
 
 
-def save_images(patches, n=0):
-    dir = os.getcwd()
-    for i, patch in enumerate(patches):
-        im = Image.fromarray(np.uint8(patch * 255))
-        im.save(dir, "_" + n + "_" + i + '.png')
 
 
 def extract_patches_from_dir(directory, patchsize,
@@ -147,10 +142,10 @@ def extract_patches_from_dir(directory, patchsize,
                              min_mean=0, min_std=0):
     """
     Extract patches from an entire directory of images.
-
+    
     If `smoothing` is not None, it is used as the standard deviation of a
     Gaussian filter applied to the image before extracting patches.
-
+    
     `patchsize`, `overlap_allowed`, `cropvalue` and `crop_fraction_allowed`
     are passed along to `extract_patches()`. `min_mean` and `min_std` are
     passed along to `filter_patches()`.
@@ -172,3 +167,11 @@ def extract_patches_from_dir(directory, patchsize,
             output[outname] = filter_patches(output[outname], min_std=min_std,
                                              min_mean=min_mean)
     return output
+
+
+def save_images(patches, n=0, dir_f= os.getcwd(), ext='.png'):
+    if not os.path.isdir(dir_f):
+            os.system('mkdir ' + dir_f)
+    for i, patch in tqdm_notebook(enumerate(patches), total=len(patches)):
+        im = Image.fromarray(np.uint8(patch), mode='RGB')
+        im.save(dir_f + 'patch' + "_" + str(n) + "_" + str(i) + ext)
