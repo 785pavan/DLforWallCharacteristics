@@ -3,12 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="ca8039a2-881b-4992-b58b-feedbfbdd64b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maskJournal.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/maskJournal.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/patches.py" beforeDir="false" afterPath="$PROJECT_DIR$/patches.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="DLforWallCharacteristics" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -116,6 +121,7 @@
       <workItem from="1571231478302" duration="1363000" />
       <workItem from="1571326880692" duration="5000" />
       <workItem from="1573047432899" duration="763000" />
+      <workItem from="1574939735415" duration="1132000" />
     </task>
     <servers />
   </component>
