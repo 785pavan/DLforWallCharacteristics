@@ -175,14 +175,17 @@ def adjust_mask(patches):
             patch = 255
     return patches
 
-def save_images(patches, n=0, dir_f= os.getcwd(), ext='.png'):
+def save_images(patches, n, dir_f= os.getcwd(), ext='JPEG'):
     if not os.path.isdir(dir_f):
             os.system('mkdir ' + dir_f)
     for i, patch in tqdm_notebook(enumerate(patches), total=len(patches)):
+        im = Image.fromarray(np.uint8(patch*255), mode='RGB')
         if len(patch.shape) == 4:
-            im = Image.fromarray(patch[:,:,:,:3])
-            im.save(dir_f + '/patch' + "_" + str(n) + "_" + str(i) + ext)
+            im.load()
+            background = Image.new('RGB', im.size, (255,255,255))
+            background.paste(im, mask=im.split()[3])
+            alpha_comp = Image.alpha_composite(background, im)
+            alpha_comp.save(dir_f + '/'+ str(n) + "_" + str(i) + '.jpg' , ext, quality=80)
         else:
-            im = Image.fromarray(np.uint8(patch*255), mode='RGB')
             im = ImageOps.invert(im)
-            im.save(dir_f + '/patch' + "_" + str(n) + "_" + str(i) + ext)
+            im.save(dir_f + '/'+ str(n) + "_" + str(i) + '.jpg' , ext)
