@@ -108,4 +108,18 @@ def create_mask_set(train_gen=train_gen):
             label, w, h = get_labels(mask, is_image_name=False)
             new_lables.append(label)
         yield (images, np.asarray(new_lables))
-        
+
+
+def reshape_label(labels, w, h):
+    ''' takes 1d array of labels and reshapes it into orignal image height and width
+    @params: labels = label
+             w = width of image
+             h = height of image'''
+
+    lbl_reshaped = np.zeros((w, h, 1))
+    labels_idx = 0
+    for i in range(w):
+        for j in range(h):
+            lbl_reshaped[i][j] = labels[labels_idx]
+            labels_idx += 1
+    return lbl_reshaped
