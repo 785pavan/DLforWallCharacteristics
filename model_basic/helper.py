@@ -1,3 +1,11 @@
+import os
+
+import numpy as np
+import tensorflow as tf
+from PIL import Image
+from tqdm import tqdm_notebook
+
+
 def one_hot_encode(mask, palette):
     """
     Converts mask to a one-hot encoding specified by the semantic map.
@@ -13,10 +21,10 @@ def one_hot_encode(mask, palette):
 
 
 def patch_maker(savedir, path, filename, target_size=(256, 256)):
-    '''opens one images at a time and saves them into patches of given hight and width.
-    It also handels RGBA format issues
-    @perams: savedir: directory to save patches
-             path: path to get the big images from'''
+    """opens one images at a time and saves them into patches of given height and width.
+    It also handel's RGBA format issues
+    @param: savedir: directory to save patches
+             path: path to get the big images from"""
     if not os.path.isdir(savedir):
         os.mkdir(savedir)
     img = Image.open(path + filename)
@@ -40,7 +48,7 @@ def patch_maker(savedir, path, filename, target_size=(256, 256)):
 
 
 def save_patches(savedir, path, images, masks):
-    '''Save patches using some axilary function above'''
+    """Save patches using some auxiliary function above"""
     if not os.path.isdir(savedir):
         os.makedirs(savedir)
     path_im = path + images
@@ -56,11 +64,11 @@ def save_patches(savedir, path, images, masks):
 
 
 def preprossesing_image(image, is_image_name=True):
-    ''' takes either image filename or file itself and returns a ndarray and width and height
+    """ takes either image filename or file itself and returns a ndarray and width and height
 
     @params: image = filename or image
              is_image_name = True is its a filename or
-                             False if passing image directly'''
+                             False if passing image directly"""
     if is_image_name:
         image = Image.open(image)
     if not type(image).__module__ == np.__name__:
@@ -76,9 +84,9 @@ def preprossesing_image(image, is_image_name=True):
 
 
 def display_image_with_labels(labels, w, h, centers):
-    ''' convert image back into rgb format from labels
+    """ convert image back into rgb format from labels
     @params: labels = w x h x 1 ndarray
-             centers = cookbook for reference '''
+             centers = cookbook for reference """
     image = np.zeros((w, h, 3))
     for i, row in enumerate(labels):
         for j, col in enumerate(row):
@@ -86,17 +94,17 @@ def display_image_with_labels(labels, w, h, centers):
     return image
 
 
-def get_labels(image, is_image_name=True):
-    ''' converts image into labels using pretrained kmeans algorithm'''
+def get_labels(kmeans_color_palette_2, image, is_image_name=True):
+    """ converts image into labels using pretrained kmeans algorithm"""
     image_array, w, h = preprossesing_image(image, is_image_name=is_image_name)
     label = reshape_label(kmeans_color_palette_2.predict(image_array), w, h)
     return label, w, h
 
 
-def get_image(label, w=None, h=None, cookbook=kmeans_color_palette_2.cluster_centers_):
-    ''' coverts labels back to image'''
-    '''if w==None or h==None:
-        w, h, _ = label.shape'''
+def get_image(label, cookbook, w=None, h=None):
+    """ coverts labels back to image
+    if w==None or h==None:
+       w, h, _ = label.shape"""
     image = display_image_with_labels(label, w, h, cookbook)
     return image
 
