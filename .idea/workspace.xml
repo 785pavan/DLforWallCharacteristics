@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca8039a2-881b-4992-b58b-feedbfbdd64b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/model_basic/helper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/color_palette_2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_basic/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_basic/helper.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="JupyterTrust" id="5df25475-963b-4672-a6f0-fd18958d7a03" />
   <component name="ProjectId" id="1RCyDSBiNqhd9AMNDTdOvycBFK1" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -127,7 +127,7 @@
       <workItem from="1573047432899" duration="763000" />
       <workItem from="1574939735415" duration="1377000" />
       <workItem from="1574943055448" duration="598000" />
-      <workItem from="1581952967424" duration="292000" />
+      <workItem from="1581952967424" duration="2397000" />
     </task>
     <servers />
   </component>
@@ -168,6 +168,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="189" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1581953412072" />
+    <state x="277" y="54" key="SettingsEditor" timestamp="1581954711690">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="54" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1581954711690" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/spliter$ImageSpliter.coverage" NAME="ImageSpliter Coverage Results" MODIFIED="1569187997679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
